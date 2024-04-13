@@ -1,0 +1,76 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.2.4'
+}
+
+repositories {
+	mavenCentral()
+}
+
+bootJar.enabled = false
+
+group = 'com.jyc'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	sourceCompatibility = '17'
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+subprojects {
+	group = 'com.jyc'
+	version = '0.0.1-SNAPSHOT'
+	sourceCompatibility = '17'
+
+	apply plugin: 'java'
+	apply plugin: 'java-library'
+	apply plugin: 'org.springframework.boot'
+	apply plugin: 'io.spring.dependency-management'
+
+	configurations {
+		compileOnly {
+			extendsFrom annotationProcessor
+		}
+	}
+
+	repositories {
+		mavenCentral()
+	}
+
+	// common dependencies
+	dependencies {
+		compileOnly 'org.projectlombok:lombok'
+		annotationProcessor 'org.projectlombok:lombok'
+		implementation 'org.springframework.boot:spring-boot-starter-web'
+		testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	}
+
+	test {
+		useJUnitPlatform()
+	}
+}
+
+project(':module-api') { // load module-common when compile
+	dependencies {
+		compileOnly project(':module-common')
+	}
+}
+
+project(':module-batch') { // load module-common when compile
+	dependencies {
+		compileOnly project(':module-common')
+	}
+}
+
+project(':module-common') { // no need for packaging
+	bootJar { enabled = false }
+	jar { enabled = true }
+}
