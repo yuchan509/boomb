@@ -33,8 +33,6 @@ pipeline {
                 --dockerfile=${WORKSPACE}/Dockerfile \
                 --destination=${ECR_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG} \
                 --destination=${ECR_REGISTRY}/${IMAGE_NAME}:latest \
-                --cache=true \
-                --cache-repo=${ECR_REGISTRY}/aion-api-cache
               """
               echo "Image ${ECR_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG} and latest tag successfully built and pushed."
             } catch (Exception e) {
