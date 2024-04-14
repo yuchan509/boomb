@@ -3,6 +3,10 @@ plugins {
 	id 'org.springframework.boot' version '3.2.4'
 }
 
+ext {
+	set('springBootVersion', '3.2.4')
+}
+
 group = 'com.jyc'
 version = '0.0.1-SNAPSHOT'
 
@@ -15,8 +19,8 @@ repositories {
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	implementation "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
+	testImplementation "org.springframework.boot:spring-boot-starter-test:${springBootVersion}"
 }
 
 tasks.named('test') {
