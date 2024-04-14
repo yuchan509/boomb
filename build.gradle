@@ -25,6 +25,15 @@ tasks.named('test') {
 	useJUnitPlatform()
 }
 
+tasks.getByName("bootJar") {
+	enabled = false
+}
+
+tasks.getByName("jar") {
+	enabled = true
+}
+
+
 subprojects {
 	group = 'com.jyc'
 	version = '0.0.1-SNAPSHOT'
@@ -62,6 +71,7 @@ project(':module-api') { // load module-common when compile
 	dependencies {
 		compileOnly project(':module-common')
 	}
+
 }
 
 project(':module-batch') { // load module-common when compile
@@ -74,3 +84,4 @@ project(':module-common') { // no need for packaging
 	bootJar { enabled = false }
 	jar { enabled = true }
 }
+
